@@ -47,15 +47,18 @@ st.write(f"Time left: {st.session_state.잔여시간} seconds")
 # 클릭 횟수 레이블
 st.write(f"현재 횟수: {st.session_state.cnt}")
 
-# 버튼 클릭 시 동작
+# "Start Timer" 버튼은 화면 상단에 배치
+if not st.session_state.running:
+    if st.button('Start Timer'):
+        start_timer()
+
+# "Button"은 하단에 배치
 col1, col2 = st.columns(2)
 with col1:
-    if not st.session_state.running:
-        if st.button('Start Timer'):
-            start_timer()
-    else:
+    if st.session_state.running:
         st.button('Button', on_click=click)
 
+# "Reset" 버튼은 우측 하단에 배치
 with col2:
     if st.button('Reset', on_click=reset):
         reset()
@@ -63,3 +66,4 @@ with col2:
 # 최종 결과 표시
 if not st.session_state.running and st.session_state.잔여시간 == 0:
     st.write(f"최종 횟수: {st.session_state.cnt}")
+
